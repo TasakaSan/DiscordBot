@@ -194,12 +194,4 @@ if(input === "!tweetdivision"){
 
  
 // login Discord TasakaBot
-mybot.loginWithToken("").then(success).catch(err);
-
-function success(token){
-
-}
-
-function err(error){
-    mybot.loginWithToken("");
-}
+bot.login(AuthDetails.token);
