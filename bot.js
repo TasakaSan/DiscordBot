@@ -87,7 +87,7 @@ bot.on("message", function(message){
 	
 	
 	//Commande de bienvenu
-	if(input === "Yop tout le monde")
+	if(input === "yop tout le monde")
         {
             mybot.reply(message, "Hey coucou toi bienvenu");
         }
@@ -99,11 +99,11 @@ bot.on("message", function(message){
         {
             mybot.reply(message, "Hey coucou toi bienvenu");
         }
-	if(input === "Bonjour")
+	if(input === "bonjour")
         {
             mybot.reply(message, "Hey coucou toi bienvenu");
         }
-	if(input === "Hi")
+	if(input === "hi")
         {
             mybot.reply(message, "Hey coucou toi bienvenu");
         }
