@@ -1,0 +1,25 @@
+{
+  "name": "rtwitterbot",
+  "version": "1.0.0",
+  "description": "Bot for Twitter",
+  "main": "job.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rancoud/RTwitterBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rancoud/RTwitterBot/issues"
+  },
+  "homepage": "https://github.com/rancoud/RTwitterBot#readme",
+  "devDependencies": {
+    "colors": "^1.1.2",
+    "npmlog": "^2.0.0",
+    "oauth": "^0.9.14",
+    "twitter": "^1.2.5"
+  }
+}
