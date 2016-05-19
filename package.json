@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "discord.js": ">=7",
-    "request": ">=2.72"
+    "request": ">=2.72",
+    "twitter": ">=1.3.0"
   }
 }
