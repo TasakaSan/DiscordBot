@@ -14,8 +14,8 @@ Créez un token
 
 #### Inviter le bot sur le serveur
 Pour inviter le bot sur un serveur, utilisez l'adresse suivante :
-`https://discordapp.com/oauth2/authorize?client_id=[id_application]&scope=bot&permissions=0`
-en prenant soin de remplacer id_application par l'id de votre application, puis choisissez le serveur dans lequel vous voulez inviter le bot
+`https://discordapp.com/oauth2/authorize?client_id=[id_application]&scope=bot&permissions=[Valeur_Permission]`
+en prenant soin de remplacer id_application par l'id de votre application ainsi que de modifier les permissions (permission administration : 66321471) https://discordapp.com/developers/docs/topics/permissions#bitwise-permission-flags, puis choisissez le serveur dans lequel vous voulez inviter le bot
 
 
 ### Twitter
