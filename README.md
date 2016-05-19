@@ -2,30 +2,60 @@
 
 Un bot pour l'application Discord base sur l'API Discord.js
 
-## Installation
+## Clés
+
+### Discord
+
+Créer une application Discord sur https://discordapp.com/developers/applications/me
+
+Ajouter un bot à votre application
+
+Créez un token
+
+#### Inviter le bot sur le serveur
+Pour inviter le bot sur un serveur, utilisez l'adresse suivante :
+`https://discordapp.com/oauth2/authorize?client_id=[id_application]&scope=bot&permissions=0`
+en prenant soin de remplacer id_application par l'id de votre application, puis choisissez le serveur dans lequel vous voulez inviter le bot
+
+
+### Twitter
+
+Créer une application Twitter sur https://apps.twitter.com/
+
+Récupérez les valeurs :
+- consumer_key
+- consumer_secret
+- access_token_key
+- access_token_secret
+
+
+## Installation normale
 
 Ce bot fonctionne avec node.js. Pour plus d'information : https://nodejs.org/en/download/
 
-Il est necessaire d'installer les nodes modules suivant :
+Il utilise les modules suivants :
 
 * Require Discord.js : https://www.npmjs.com/package/discord.js
 * Require Request : https://www.npmjs.com/package/request
+* Require Twitter : https://www.npmjs.com/package/twitter
 
-Le bot utilise egalement un autre service qui est [Rtwitterbot](https://github.com/rancoud/RTwitterBot)
-Qui necessite aussi une configuration...
+Installer avec npm install
 
-Creer une application Twitter sur https://apps.twitter.com/
-* Installer les dependances avec npm install
-* Modifier le fichier conf.twitter.app.js
-* Ajouter les name , consumer_key , consumer_secret , access_token_key , access_token_secret (callback_url is for user authentification)
+### Configuration
 
-## Running
+La configuration s'effectue dans auth.json, remplaçez les valeurs dans le fichier
+
+### Running
+
+Pour demarrer le bot il faut utiliser `node bot.js`
 
 
-Avant de lancer votre application il est necessaire de modifier le fichier auth.json et d'y ajouter vos authentifications.
+## Installation dans docker
 
-    "token": "Generation du token de l'app via https://discordapp.com/developers/applications" 
-    "email": "Optionnel"
-    "password": "Optionnel"
+Le projet peut utiliser Docker (http://www.docker.io)
 
-Pour demarrer le bot il faut utiliser "node bot.js"
+Créez un fichier d'environnement config.env selon le modèle fourni dans config.env.tpl et remplaçez les valeurs dans ce fichier
+
+Construisez le projet avec la commande `docker-compose build`
+
+Lançez le bot avec la commande `docker-compose up`
