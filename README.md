@@ -54,8 +54,16 @@ Pour demarrer le bot il faut utiliser `node bot.js`
 
 Le projet peut utiliser Docker (http://www.docker.io)
 
-Créez un fichier d'environnement config.env selon le modèle fourni dans config.env.tpl et remplaçez les valeurs dans ce fichier
+### Configuration
+
+Créez un fichier d'environnement config.env selon le modèle fourni dans config.env.tpl et remplaçez les valeurs dans ce fichier (attention de ne pas modifier auth.json)
+
+### Running
 
 Construisez le projet avec la commande `docker-compose build`
 
 Lançez le bot avec la commande `docker-compose up`
+
+### Developpement
+
+Pour modifier le code du bot sans rebuild à chaque fois, il sufit de décommenter le volume dans docker-compose.yml pour utiliser le fichier source au lieu du fichier dans le conteneur
