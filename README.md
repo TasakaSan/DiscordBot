@@ -39,7 +39,9 @@ Il utilise les modules suivants :
 * Require Request : https://www.npmjs.com/package/request
 * Require Twitter : https://www.npmjs.com/package/twitter
 
-Installer avec npm install
+Installer avec `npm install`
+
+(sur un raspberry pi le support audio n'est pas disponible : `npm install --no-optional` pour désactiver l'option)
 
 ### Configuration
 
