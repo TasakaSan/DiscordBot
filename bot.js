@@ -21,17 +21,6 @@ try {
 	process.exit();
 }
 
-// Get npm modules twitter
-try {
-	var Twitter = require('twitter');
-	console.log("LIB : twitter [OK]");
-} catch (e){
-	console.log(e.stack);
-	console.log(process.version);
-	console.log("Please run npm install and ensure it passes with no errors!");
-	process.exit();
-}
-
 // Get authentication data
 try {
 	var AuthDetails = require("./auth.json");
@@ -49,27 +38,14 @@ try {
 	process.exit();
 }
 
-// Define twitter client
-try {
-	var twitter_client = new Twitter({
-	  consumer_key: AuthDetails.twitter.consumer_key,
-	  consumer_secret: AuthDetails.twitter.consumer_secret,
-	  access_token_key: AuthDetails.twitter.access_token_key,
-	  access_token_secret: AuthDetails.twitter.access_token_secret
-	});
-	console.log("OBJ : Twitter.Client() [OK]");
-} catch (e){
-	console.log("Error Twitter.Client");
-	process.exit();
-}
-
-function getTwitter(message, name) {
-	var params = {screen_name: name};
-	twitter_client.get('statuses/user_timeline', params, function(error, tweets, response){
-	  if (!error) {
-			mybot.sendMessage(message, name + " viens de tweet : " + tweets[0].text);
-	  }
-	});
+// File exists
+var fs = require('fs');
+function fileExists(filePath) {
+    try {
+        return fs.statSync(filePath).isFile();
+    } catch (err) {
+        return false;
+    }
 }
 
 //  Define & Connect Bot on Discord
@@ -81,8 +57,27 @@ try {
 	process.exit();
 }
 
+// Define message
 mybot.on("message", function(message) {
 	var input = message.content.toLowerCase().trim();
+
+	// le bloc qui suit permet de charger à la volée des commandes custom
+	if (input.startsWith("!")) { // les commandes démarrent avec !
+		var command = input.replace("!",""); // je supprime le !
+		if (command.indexOf(" ") > -1) { // si il y a un espace c'est qu'il y a une sous commande, donc ne prendre que la commande !commande
+			command = command.substring(0, command.indexOf(' ')).trim();
+		}
+
+		// Chargement dynamique du module
+		var filename = "./message/message_" + command + ".js";
+		if (fileExists(filename)){
+			console.log(filename + " [load ok]");
+			require(filename).message(message, mybot, input);
+		}
+	}
+
+
+
 	// Commande List
 	if(input === "!command") {
 		mybot.reply(message, "Hey voici la liste des choses que je peux faire : !rules \n !social \n !thedivision \n !farmroad \n !diablo3 \n !drahquebible \n !stream \n !donnation \n !hardware \n !nvidia \n !planning \n !tasaka \n !lastwolfplay \n !thedivision");
@@ -111,48 +106,33 @@ mybot.on("message", function(message) {
 	// Commande Bot Twitch
 	if(input === "!rules") {
 		mybot.sendMessage(message, "Bienvenu(e)s dans la meute ! \n Ici les deux seules règles qui prévalent sont le respect des autres et de l'orthographe. \n Les traits d'esprits sont vivement encouragés et n'oubliez pas qu'en écrivant sur le tchat vos écrits sont publics ! \n Bon jeu");
-  }
-  if(input === "!social") {
-    mybot.sendMessage(message, "Le dernier loup sur la toile c'est par là : https://twitter.com/lastwolfplays \n https://www.facebook.com/lastwolfplays \n https://www.youtube.com/channel/UC_D3dHEqqZrx_k82v5lJglQ");
-  }
-  if(input === "!thedivision") {
-    mybot.sendMessage(message, "Un des gdoc de référence sur le jeu : https://goo.gl/aLkMld  \n Map de la DZ complète avec filtres  http://goo.gl/JhFEGU \n le gdoc de pandé avec les builds dps et supports => https://goo.gl/zuFN36");
-  }
-  if(input === "!farmroad") {
-    mybot.sendMessage(message, "https://youtu.be/qkAqSGHir30");
-  }
-  if(input === "!diablo3") {
-    mybot.sendMessage(message, "Voici la liste de mes personnages : http://eu.battle.net/d3/fr/profile/Lastwolf-2869/hero/54563586");
-  }
-  if(input === "!drahquebible") {
-    mybot.sendMessage(message, "Voici le Gdoc de référence sur le start de saison sur Diablo 3 : https://docs.google.com/spreadsheets/d/1gCq8ihJBcYDZpPICFqA407fL0Fl_K9PMBp83npy5DcM/htmlview?usp=sharing&sle=true");
-  }
-  if(input === "!stream") {
-    mybot.sendMessage(message, "hey voici le stream de lastwolf : https://www.twitch.tv/lastwolfplay");
-  }
+	}
+	if(input === "!social") {
+		mybot.sendMessage(message, "Le dernier loup sur la toile c'est par là : https://twitter.com/lastwolfplays \n https://www.facebook.com/lastwolfplays \n https://www.youtube.com/channel/UC_D3dHEqqZrx_k82v5lJglQ");
+	}
+	if(input === "!thedivision") {
+		mybot.sendMessage(message, "Un des gdoc de référence sur le jeu : https://goo.gl/aLkMld  \n Map de la DZ complète avec filtres  http://goo.gl/JhFEGU \n le gdoc de pandé avec les builds dps et supports => https://goo.gl/zuFN36");
+	}
+	if(input === "!farmroad") {
+		mybot.sendMessage(message, "https://youtu.be/qkAqSGHir30");
+	}
+	if(input === "!diablo3") {
+		mybot.sendMessage(message, "Voici la liste de mes personnages : http://eu.battle.net/d3/fr/profile/Lastwolf-2869/hero/54563586");
+	}
+	if(input === "!drahquebible") {
+		mybot.sendMessage(message, "Voici le Gdoc de référence sur le start de saison sur Diablo 3 : https://docs.google.com/spreadsheets/d/1gCq8ihJBcYDZpPICFqA407fL0Fl_K9PMBp83npy5DcM/htmlview?usp=sharing&sle=true");
+	}
+	if(input === "!stream") {
+		mybot.sendMessage(message, "hey voici le stream de lastwolf : https://www.twitch.tv/lastwolfplay");
+	}
 	if(input === "!nvidia") {
-    mybot.sendMessage(message, "hey Lastwolfplay lance son stream sur NvidiaFrance : https://www.twitch.tv/nvidiafrance");
-  }
-  if(input === "!donnation") {
-    mybot.sendMessage(message, "hey si toi aussi tu veux soutenir le stream de lastwolf : https://www.twitchalerts.com/donate/lastwolfplay \n les donnations ne sont pas obligatoire mais elles aident pour l'amélioration du stream");
-  }
-  if(input === "!hardware") {
-    mybot.sendFile(message, "./Assets/hardware.jpg");
-  }
-
-	// Sends the last tweet @Username
-	if (input === "!tasaka") {
-		getTwitter(message, "TasakaSama");
+		mybot.sendMessage(message, "hey Lastwolfplay lance son stream sur NvidiaFrance : https://www.twitch.tv/nvidiafrance");
 	}
-
-	// Sends the last tweet @Username
-	if (input === "!lastwolf") {
-		getTwitter(message, "lastwolfplays");
+	if(input === "!donnation") {
+		mybot.sendMessage(message, "hey si toi aussi tu veux soutenir le stream de lastwolf : https://www.twitchalerts.com/donate/lastwolfplay \n les donnations ne sont pas obligatoire mais elles aident pour l'amélioration du stream");
 	}
-
-	// Sends the last tweet @Username
-	if (input === "!tweetdivision") {
-		getTwitter(message, "TheDivisionGame");
+	if(input === "!hardware") {
+		mybot.sendFile(message, "./Assets/hardware.jpg");
 	}
 
 	// Parse json API Twitch

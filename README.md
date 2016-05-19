@@ -14,8 +14,8 @@ Créez un token
 
 #### Inviter le bot sur le serveur
 Pour inviter le bot sur un serveur, utilisez l'adresse suivante :
-`https://discordapp.com/oauth2/authorize?client_id=[id_application]&scope=bot&permissions=0`
-en prenant soin de remplacer id_application par l'id de votre application, puis choisissez le serveur dans lequel vous voulez inviter le bot
+`https://discordapp.com/oauth2/authorize?client_id=[id_application]&scope=bot&permissions=[Valeur_Permission]`
+en prenant soin de remplacer id_application par l'id de votre application ainsi que de modifier les permissions (permission administration : 66321471) https://discordapp.com/developers/docs/topics/permissions#bitwise-permission-flags, puis choisissez le serveur dans lequel vous voulez inviter le bot
 
 
 ### Twitter
@@ -39,11 +39,13 @@ Il utilise les modules suivants :
 * Require Request : https://www.npmjs.com/package/request
 * Require Twitter : https://www.npmjs.com/package/twitter
 
-Installer avec npm install
+Installer avec `npm install`
+
+(sur un raspberry pi le support audio n'est pas disponible : `npm install --no-optional` pour désactiver l'option)
 
 ### Configuration
 
-La configuration s'effectue dans auth.json, remplaçez les valeurs dans le fichier
+Créez un fichier auth.json selon le modèle fourni dans auth.json.tpl et remplaçez les valeurs dans ce fichier
 
 ### Running
 
@@ -56,7 +58,9 @@ Le projet peut utiliser Docker (http://www.docker.io)
 
 ### Configuration
 
-Créez un fichier d'environnement config.env selon le modèle fourni dans config.env.tpl et remplaçez les valeurs dans ce fichier (attention de ne pas modifier auth.json)
+Créez un fichier d'environnement config.env selon le modèle fourni dans config.env.tpl et remplaçez les valeurs dans ce fichier (la création d'un fichier auth.json est automatique dans ce cas)
+
+La configuration est externalisée afin de permettre l'utilisation du conteneur sur des environnements différents sans devoir le rebuild.
 
 ### Running
 
@@ -67,3 +71,13 @@ Lançez le bot avec la commande `docker-compose up`
 ### Developpement
 
 Pour modifier le code du bot sans rebuild à chaque fois, il sufit de décommenter le volume dans docker-compose.yml pour utiliser le fichier source au lieu du fichier dans le conteneur
+
+## Architecture des modules
+
+Il est maintenant possible de créer des modules d'autoréponse aux messages de type `!command`
+
+Pour créer un nouveau module, s'inspirer du fichier `message/message_hello.js`
+
+Une commande `!test` va charger dynamiquement le fichier `message/message_test.js` et executer la fonction qui est exportée.
+
+Les objets `message`, `mybot`, `input` sont automatiquement envoyés à la fonction `message()`
