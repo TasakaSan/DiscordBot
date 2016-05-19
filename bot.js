@@ -32,7 +32,7 @@ try {
 
 // Get Twitch API data
 try {
-	var url = "https://api.twitch.tv/kraken/channels/lastwolfplay";
+	var url = "https://api.twitch.tv/kraken/channels/";
 } catch (e){
 	console.log("Please verify your username to twitch api");
 	process.exit();
@@ -154,7 +154,7 @@ mybot.on('ready', () => {
 	console.log("Bot is ready.");
 });
 
-// login Discord TasakaBot
+// login Discord 
 mybot.loginWithToken(AuthDetails.discord.token).then(bot_success).catch(bot_error);
 
 function bot_success(token){
