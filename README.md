@@ -74,10 +74,10 @@ Pour modifier le code du bot sans rebuild à chaque fois, il sufit de décomment
 
 ## Architecture des modules
 
-Il est maintenant possible de créer des modules d'autoréponse aux messages de type !command
+Il est maintenant possible de créer des modules d'autoréponse aux messages de type `!command`
 
-Pour créer un nouveau module, s'inspirer du fichier message/message_hello.js
+Pour créer un nouveau module, s'inspirer du fichier `message/message_hello.js`
 
-Une commande !test va charger dynamiquement le fichier message/message_test.js et executer la fonction qui est exportée.
+Une commande `!test` va charger dynamiquement le fichier `message/message_test.js` et executer la fonction qui est exportée.
 
-Les objets message, mybot, input sont automatiquement envoyés à la fonction message()
+Les objets `message`, `mybot`, `input` sont automatiquement envoyés à la fonction `message()`
