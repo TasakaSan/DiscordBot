@@ -155,6 +155,12 @@ mybot.on("message", function(message) {
 		getTwitter(message, "TheDivisionGame");
 	}
 
+	// Get last tweet from user
+	if (input.startsWith("!twitter")) {
+		username = input.replace("!twitter", "").trim();
+		getTwitter(message, username);
+	}
+
 	// Parse json API Twitch
 	if (input === "!planning") {
 		request({
