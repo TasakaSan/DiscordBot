@@ -21,6 +21,17 @@ try {
 	process.exit();
 }
 
+// Get npm modules twitter
+try {
+	var Twitter = require('twitter');
+	console.log("LIB : twitter [OK]");
+} catch (e){
+	console.log(e.stack);
+	console.log(process.version);
+	console.log("Please run npm install and ensure it passes with no errors!");
+	process.exit();
+}
+
 // Get authentication data
 try {
 	var AuthDetails = require("./auth.json");
@@ -37,39 +48,29 @@ try {
 	console.log("Please verify your username to twitch api");
 	process.exit();
 }
-//
-// //  Get Rtwitter
-// try {
-// 	var exec = require('child_process').exec;
-// } catch (e){
-// 	console.log("Please verify Rtwitter configuration");
-// 	process.exit();
-// }
-//
-// // RtwitterBot : https://github.com/rancoud/RTwitterBot
-// //  Get Rtwitter
-// try {
-// 	var cmd = 'exec node /usr/lib/node_modules/RTwitterBot/job.js lasttweet "TasakaSama"';
-// } catch (e){
-// 	console.log("Please verify and select Twitter Account in job");
-// 	process.exit();
-// }
-//
-// //  Get Rtwitter
-// try {
-// 	var lastwolf = 'exec node /usr/lib/node_modules/RTwitterBot/job.js lasttweet "lastwolfplays"';
-// } catch (e){
-// 	console.log("Please verify and select Twitter Account in job");
-// 	process.exit();
-// }
-//
-// //  Get Rtwitter
-// try {
-// 	var TheDivisionGame = 'exec node /usr/lib/node_modules/RTwitterBot/job.js lasttweet "TheDivisionGame"';
-// } catch (e){
-// 	console.log("Please verify and select Twitter Account in job");
-// 	process.exit();
-// }
+
+// Define twitter client
+try {
+	var twitter_client = new Twitter({
+	  consumer_key: AuthDetails.twitter.consumer_key,
+	  consumer_secret: AuthDetails.twitter.consumer_secret,
+	  access_token_key: AuthDetails.twitter.access_token_key,
+	  access_token_secret: AuthDetails.twitter.access_token_secret
+	});
+	console.log("OBJ : Twitter.Client() [OK]");
+} catch (e){
+	console.log("Error Twitter.Client");
+	process.exit();
+}
+
+function getTwitter(message, name) {
+	var params = {screen_name: name};
+	twitter_client.get('statuses/user_timeline', params, function(error, tweets, response){
+	  if (!error) {
+			mybot.sendMessage(message, name + " viens de tweet : " + tweets[0].text);
+	  }
+	});
+}
 
 //  Define & Connect Bot on Discord
 try {
@@ -141,23 +142,17 @@ mybot.on("message", function(message) {
 
 	// Sends the last tweet @Username
 	if (input === "!tasaka") {
-		exec(cmd, function(error, stdout, stderr) {
-			mybot.sendMessage(message, "Tasaka viens de tweet : " + stdout);
-    });
+		getTwitter(message, "TasakaSama");
 	}
 
 	// Sends the last tweet @Username
 	if (input === "!lastwolf") {
-		exec(lastwolf, function(error, stdout, stderr) {
-			mybot.sendMessage(message, "Lastwolf viens de tweet : " + stdout);
-    });
+		getTwitter(message, "lastwolfplays");
 	}
 
 	// Sends the last tweet @Username
 	if (input === "!tweetdivision") {
-		exec(TheDivisionGame, function(error, stdout, stderr) {
-			mybot.sendMessage(message, "TheDivisionGame viens de tweet : " + stdout);
-    });
+		getTwitter(message, "TheDivisionGame");
 	}
 
 	// Parse json API Twitch
@@ -180,13 +175,13 @@ mybot.on('ready', () => {
 });
 
 // login Discord TasakaBot
-mybot.loginWithToken(AuthDetails.token).then(success).catch(err);
+mybot.loginWithToken(AuthDetails.discord.token).then(bot_success).catch(bot_error);
 
-function success(token){
+function bot_success(token){
     // handle success
 }
 
-function err(error){
+function bot_error(error){
     // handle error
 		console.log('ERROR');
 		console.log(error);
