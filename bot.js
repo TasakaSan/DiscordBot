@@ -21,17 +21,6 @@ try {
 	process.exit();
 }
 
-// Get npm modules twitter
-try {
-	var Twitter = require('twitter');
-	console.log("LIB : twitter [OK]");
-} catch (e){
-	console.log(e.stack);
-	console.log(process.version);
-	console.log("Please run npm install and ensure it passes with no errors!");
-	process.exit();
-}
-
 // Get authentication data
 try {
 	var AuthDetails = require("./auth.json");
@@ -49,27 +38,14 @@ try {
 	process.exit();
 }
 
-// Define twitter client
-try {
-	var twitter_client = new Twitter({
-	  consumer_key: AuthDetails.twitter.consumer_key,
-	  consumer_secret: AuthDetails.twitter.consumer_secret,
-	  access_token_key: AuthDetails.twitter.access_token_key,
-	  access_token_secret: AuthDetails.twitter.access_token_secret
-	});
-	console.log("OBJ : Twitter.Client() [OK]");
-} catch (e){
-	console.log("Error Twitter.Client");
-	process.exit();
-}
-
-function getTwitter(message, name) {
-	var params = {screen_name: name};
-	twitter_client.get('statuses/user_timeline', params, function(error, tweets, response){
-	  if (!error) {
-			mybot.sendMessage(message, name + " viens de tweet : " + tweets[0].text);
-	  }
-	});
+// File exists
+var fs = require('fs');
+function fileExists(filePath) {
+    try {
+        return fs.statSync(filePath).isFile();
+    } catch (err) {
+        return false;
+    }
 }
 
 //  Define & Connect Bot on Discord
@@ -81,8 +57,27 @@ try {
 	process.exit();
 }
 
+// Define message
 mybot.on("message", function(message) {
 	var input = message.content.toLowerCase().trim();
+
+	// le bloc qui suit permet de charger à la volée des commandes custom
+	if (input.startsWith("!")) { // les commandes démarrent avec !
+		var command = input.replace("!",""); // je supprime le !
+		if (command.indexOf(" ") > -1) { // si il y a un espace c'est qu'il y a une sous commande, donc ne prendre que la commande !commande
+			command = command.substring(0, command.indexOf(' ')).trim();
+		}
+
+		// Chargement dynamique du module
+		var filename = "./message/message_" + command + ".js";
+		if (fileExists(filename)){
+			console.log(filename + " [load ok]");
+			require(filename).message(message, mybot, input);
+		}
+	}
+
+
+
 	// Commande List
 	if(input === "!command") {
 		mybot.reply(message, "Hey voici la liste des choses que je peux faire : !rules \n !social \n !thedivision \n !farmroad \n !diablo3 \n !drahquebible \n !stream \n !donnation \n !hardware \n !nvidia \n !planning \n !tasaka \n !lastwolfplay \n !thedivision");
@@ -139,27 +134,6 @@ mybot.on("message", function(message) {
   if(input === "!hardware") {
     mybot.sendFile(message, "./Assets/hardware.jpg");
   }
-
-	// Sends the last tweet @Username
-	if (input === "!tasaka") {
-		getTwitter(message, "TasakaSama");
-	}
-
-	// Sends the last tweet @Username
-	if (input === "!lastwolf") {
-		getTwitter(message, "lastwolfplays");
-	}
-
-	// Sends the last tweet @Username
-	if (input === "!tweetdivision") {
-		getTwitter(message, "TheDivisionGame");
-	}
-
-	// Get last tweet from user
-	if (input.startsWith("!twitter")) {
-		username = input.replace("!twitter", "").trim();
-		getTwitter(message, username);
-	}
 
 	// Parse json API Twitch
 	if (input === "!planning") {
