@@ -1,0 +1,38 @@
+{
+	"yop tout le monde": {
+		"message": "Yop tout seul :laughing:"
+	},
+	"salut tout le monde": {
+		"message": "Salut tout seul :laughing:"
+	},
+	"bonjour tout le monde": {
+		"message": "Bonjour tout seul :laughing:"
+	},
+	"salut la meute": {
+		"message": "Bonjour à toi frère loup :wolf:"
+	},
+	"bonjour la meute": {
+		"message": "Bonjour à toi frère loup :wolf:"
+	},
+	"yop": {
+		"message": "Yop, crache pas dedans :laughing:"
+	},
+	"plop les gens": {
+		"message": "Plop :interrobang:"
+	},
+	"plop": {
+		"message": "Plop :interrobang:"
+	},
+	"bonjour": {
+		"message": "Bonjour et bienvenu :smiley:"
+	},
+	"hi": {
+		"message": "Hi, welcome"
+	},
+	"salut": {
+		"message": "Salut"
+	},
+	"la grande question sur la vie, l'univers et le reste": {
+		"message": "42"
+	}
+}

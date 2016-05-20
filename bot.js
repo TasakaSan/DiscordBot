@@ -1,24 +1,27 @@
 console.log('Start');
-// Get npm modules discord.js
-try {
-	var Discord = require("discord.js");
-	console.log("LIB : discord.js [OK]");
-} catch (e){
-	console.log(e.stack);
-	console.log(process.version);
-	console.log("Please run npm install and ensure it passes with no errors!");
-	process.exit();
+// Get all required npm modules
+var package_info = require("./package.json");
+for(var dependency in package_info.dependencies) {
+	var name = dependency.replace('.js','');
+	console.log("Loading "+dependency);
+	try {
+		eval("var "+name+" = require(\""+dependency+"\")");
+		console.log("LIB : "+dependency+" [OK]");
+	} catch(e) {
+		console.log(e.stack);
+		console.log(process.version);
+		console.log("Please run npm install "+dependency+" and ensure it passes with no errors!");
+		process.exit();
+	}
 }
 
-// Get npm modules request
-try {
-	var request = require("request");
-	console.log("LIB : request [OK]");
-} catch (e){
-	console.log(e.stack);
-	console.log(process.version);
-	console.log("Please run npm install and ensure it passes with no errors!");
-	process.exit();
+// Check the existance of a given file
+function fileExists(filePath) {
+    try {
+        return fs.statSync(filePath).isFile();
+    } catch (err) {
+        return false;
+    }
 }
 
 // Get authentication data
@@ -30,131 +33,178 @@ try {
 	process.exit();
 }
 
-// Get Twitch API data
-try {
-	var url = "https://api.twitch.tv/kraken/channels/";
-} catch (e){
-	console.log("Please verify your username to twitch api");
-	process.exit();
-}
-
-// File exists
-var fs = require('fs');
-function fileExists(filePath) {
-    try {
-        return fs.statSync(filePath).isFile();
-    } catch (err) {
-        return false;
-    }
-}
-
 //  Define & Connect Bot on Discord
 try {
-	var mybot = new Discord.Client();
-	console.log("OBJ : Discord.Client() [OK]");
+	var options = { autoReconnect: true };
+	var mybot = new discord.Client(options);
+	console.log("OBJ : discord.Client() [OK]");
 } catch (e){
-	console.log("Error Discord.Client");
+	console.log("Error discord.Client");
 	process.exit();
 }
 
-// Define message
-mybot.on("message", function(message) {
-	var input = message.content.toLowerCase().trim();
+// Preload plugins
+/*try {
+	var plugins = require("./plugins.js");
+	console.log("PLUGINS : loaded [OK]");
+} catch(e) {
+	console.log("Error plugins\n"+e.stack);
+	process.exit();
+}*/
+try {
+	var plugins = require("./plugins.js").init();
+	console.log("PLUGINS : loaded [OK]");
+} catch(e) {
+	console.log("Error plugins\n"+e.stack);
+	process.exit();
+}
 
-	// le bloc qui suit permet de charger à la volée des commandes custom
-	if (input.startsWith("!")) { // les commandes démarrent avec !
-		var command = input.replace("!",""); // je supprime le !
-		if (command.indexOf(" ") > -1) { // si il y a un espace c'est qu'il y a une sous commande, donc ne prendre que la commande !commande
-			command = command.substring(0, command.indexOf(' ')).trim();
-		}
-
-		// Chargement dynamique du module
-		var filename = "./message/message_" + command + ".js";
-		if (fileExists(filename)){
-			console.log(filename + " [load ok]");
-			require(filename).message(message, mybot, input);
-		}
-	}
-
-
-
-	// Commande List
-	if(input === "!command") {
-		mybot.reply(message, "Hey voici la liste des choses que je peux faire : !rules \n !social \n !thedivision \n !farmroad \n !diablo3 \n !drahquebible \n !stream \n !donnation \n !hardware \n !nvidia \n !planning \n !tasaka \n !lastwolfplay \n !thedivision");
-	}
-
-	// Commande de bienvenu
-	if(input === "yop tout le monde") {
-		mybot.reply(message, "Hey coucou toi bienvenu");
-	}
-	if(input === "yop") {
-		mybot.reply(message, "Hey coucou toi bienvenu");
-	}
-	if(input === "salut la meute") {
-		mybot.reply(message, "Hey coucou toi bienvenu");
-	}
-	if(input === "bonjour") {
-		mybot.reply(message, "Hey coucou toi bienvenu");
-	}
-	if(input === "hi") {
-		mybot.reply(message, "Hey coucou toi bienvenu");
-	}
-	if(input === "salut") {
-		mybot.reply(message, "Hey coucou toi bienvenu");
-	}
-
-	// Commande Bot Twitch
-	if(input === "!rules") {
-		mybot.sendMessage(message, "Bienvenu(e)s dans la meute ! \n Ici les deux seules règles qui prévalent sont le respect des autres et de l'orthographe. \n Les traits d'esprits sont vivement encouragés et n'oubliez pas qu'en écrivant sur le tchat vos écrits sont publics ! \n Bon jeu");
-	}
-	if(input === "!social") {
-		mybot.sendMessage(message, "Le dernier loup sur la toile c'est par là : https://twitter.com/lastwolfplays \n https://www.facebook.com/lastwolfplays \n https://www.youtube.com/channel/UC_D3dHEqqZrx_k82v5lJglQ");
-	}
-	if(input === "!thedivision") {
-		mybot.sendMessage(message, "Un des gdoc de référence sur le jeu : https://goo.gl/aLkMld  \n Map de la DZ complète avec filtres  http://goo.gl/JhFEGU \n le gdoc de pandé avec les builds dps et supports => https://goo.gl/zuFN36");
-	}
-	if(input === "!farmroad") {
-		mybot.sendMessage(message, "https://youtu.be/qkAqSGHir30");
-	}
-	if(input === "!diablo3") {
-		mybot.sendMessage(message, "Voici la liste de mes personnages : http://eu.battle.net/d3/fr/profile/Lastwolf-2869/hero/54563586");
-	}
-	if(input === "!drahquebible") {
-		mybot.sendMessage(message, "Voici le Gdoc de référence sur le start de saison sur Diablo 3 : https://docs.google.com/spreadsheets/d/1gCq8ihJBcYDZpPICFqA407fL0Fl_K9PMBp83npy5DcM/htmlview?usp=sharing&sle=true");
-	}
-	if(input === "!stream") {
-		mybot.sendMessage(message, "hey voici le stream de lastwolf : https://www.twitch.tv/lastwolfplay");
-	}
-	if(input === "!nvidia") {
-		mybot.sendMessage(message, "hey Lastwolfplay lance son stream sur NvidiaFrance : https://www.twitch.tv/nvidiafrance");
-	}
-	if(input === "!donnation") {
-		mybot.sendMessage(message, "hey si toi aussi tu veux soutenir le stream de lastwolf : https://www.twitchalerts.com/donate/lastwolfplay \n les donnations ne sont pas obligatoire mais elles aident pour l'amélioration du stream");
-	}
-	if(input === "!hardware") {
-		mybot.sendFile(message, "./Assets/hardware.jpg");
-	}
-
-	// Parse json API Twitch
-	if (input === "!planning") {
-		request({
-			url: url,
-			json: true
-		}, function (error, response, body) {
-			if (!error && response.statusCode === 200) {
-				mybot.sendFile(message, body.video_banner);
-			}
-		})
-	}
-
-// bot function close
-});
-
-mybot.on('ready', () => {
+mybot.on('ready', function () {
 	console.log("Bot is ready.");
 });
 
-// login Discord 
+mybot.on("disconnected", function () {
+	console.log("Disconnected!");
+	process.exit(1); //exit node.js with an error
+	
+});
+
+// Get command lists
+try {
+	var basics = require("./commands/basics.json");
+	console.log("FILE : basics.json [OK]");
+} catch (e){
+	console.log("Please check the basics.json file.\n"+e.stack);
+	process.exit();
+}
+try {
+	var advanced = require("./commands/advanced.json");
+	console.log("FILE : advanced.json [OK]");
+} catch (e){
+	console.log("Please check the advanced.json file.\n"+e.stack);
+	process.exit();
+}
+
+mybot.on("message", function(message) {
+	if(message.author == mybot.user) {
+		return;
+	}
+	
+	var input = message.content.trim();
+	
+	// message is a command
+	if(input[0] === '!') {		
+		console.log("raw command: "+input);
+	
+		var user_cmd = {};
+		user_cmd.name = input.split(" ")[0].substring(1);
+		user_cmd.content = input.substring(user_cmd.name.length+2);
+		
+		user_cmd.name = user_cmd.name.toLowerCase();
+		
+		console.log("command "+user_cmd.name+" from "+message.author);
+		
+		var command = basics[user_cmd.name];
+		if(!command) {
+			//console.log("command "+user_cmd.name+" not defined in basics!");
+			command = advanced[user_cmd.name];
+		}
+		if(!command) {
+			console.log("command "+user_cmd.name+" not defined!");
+		} else if (user_cmd.name == "command" || user_cmd.name == "advanced") {
+			// specific help command
+			var info = command.message;
+			if (user_cmd.name == "advanced") {
+				var cmd_list = advanced;
+			} else {
+				var cmd_list = basics;
+			}
+			for(var cmd in cmd_list) {
+				info += "\n!" + cmd;
+				if (user_cmd.name == "advanced") {
+					var usage = cmd_list[cmd].usage;
+					if(usage){
+						info += " " + usage;
+					}
+					var description = cmd_list[cmd].description;
+					if(description){
+						info += "\n\t" + description;
+					}
+				}
+			}
+			mybot.sendMessage(message.channel, info);
+		} else {
+			var alias = false;
+			if (command.alias) {
+				alias = true;
+				var original = user_cmd.name;
+				user_cmd.name = command.alias.split(" ")[0];
+				user_cmd.content = command.alias.substring(user_cmd.name.length+1);
+				console.log("!"+original+" alias transformed into !"+user_cmd.name+" "+user_cmd.content);
+			}
+			/*if (command.process) {
+				eval(command.process);
+			}*/
+			//if (command.file) {}
+			if (plugins[user_cmd.name]) {
+				// retrieve the plugin command and its param
+				var plugin_cmd = user_cmd.content.split(" ")[0];
+				var plugin_param = user_cmd.content.substring(plugin_cmd.length+1).split(" ")[0].toLowerCase();
+				plugin_cmd = plugin_cmd.toLowerCase();
+				// set options to pass to plugin
+				var options = {
+					bot: mybot,
+					message: message
+				};
+				if (plugin_cmd === "" || plugin_param === "") {
+					plugins[user_cmd.name].help(options);
+				} else {
+					console.log("Command "+plugin_cmd+"('"+plugin_param+"') in plugin "+user_cmd.name);
+					options["command"]	= plugin_cmd;
+					options["param"]	= plugin_param;
+					plugins[user_cmd.name].get(options);
+				}
+			} else if (command.message) {
+				mybot.sendMessage(message.channel, command.message.replace(/#NL#/g,"\n"));
+			} else {
+				console.log("Empty command "+user_cmd.name+": "+JSON.stringify(command));
+			}
+		}
+	} else if(input.indexOf(mybot.user.mention()) == 0) {
+		// Bot is mentioned at beginning
+		console.log("user "+message.author+" is speaking with Bot");
+		try { 
+			var user_cmd = {};
+			user_cmd.mention = input.split(" ")[0];
+			user_cmd.first = input.split(" ")[1];
+			user_cmd.content = input.substring(mybot.user.mention().length+user_cmd.first.length+2);
+			
+			// do something ?
+			
+		} catch(e) { //no command 
+			mybot.reply(message, "Oui ?");
+		}
+	} else if(message.isMentioned(mybot.user)) {
+		// Bot is mentioned elsewhere
+		console.log("user "+message.author+" mentioned Bot");
+		mybot.sendMessage(message.channel, "On parle de moi ? :smile:");
+	} else if(input.length >= 2 && input.length <= 24) {
+		// Maybe dialog context is possible
+		console.log("user "+message.author+" may dialog with Bot");
+		var dialogs = require("./dialogs/main.json");
+		for(intro in dialogs) {
+			if(input.toLowerCase().indexOf(intro) >= 0) {
+				var answer = dialogs[intro];
+				mybot.reply(message, answer.message);
+				break;
+			}
+		}
+	}
+
+	// bot function close
+});
+
+// login Discord TasakaBot
 mybot.loginWithToken(AuthDetails.discord.token).then(bot_success).catch(bot_error);
 
 function bot_success(token){
@@ -163,6 +213,6 @@ function bot_success(token){
 
 function bot_error(error){
     // handle error
-		console.log('ERROR');
-		console.log(error);
+	console.log('ERROR');
+	console.log(error);
 }

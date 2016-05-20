@@ -1,0 +1,47 @@
+{
+	"online": {
+		"url": "https://api.twitch.tv/kraken/streams/",
+		"fields": [
+			"game",
+			"viewers"
+		],
+		"message": "#USER# est actuellement en ligne et joue à #GAME#, #V# viewers devant le show !",
+		"error": "#USER# est actuellement hors ligne"
+	},
+	"status": {
+		"url": "https://api.twitch.tv/kraken/channels/",
+		"fields": [
+			"status"
+		],
+		"message": "Le status de #USER# est #status#",
+		"error": "Impossible de trouver #USER#"
+	},
+	"planning": {
+		"method" : "file",
+		"url": "https://api.twitch.tv/kraken/channels/",
+		"fields": [
+			"video_banner"
+		],
+		"error": "Impossible de trouver #USER#"
+	},
+	"game": {
+		"url": "https://api.twitch.tv/kraken/channels/",
+		"fields": [
+			"game"
+		],
+		"message": "#USER# joue actuellement à #game#",
+		"error": "Impossible de trouver #USER#"
+	},
+	"channel": {
+		"url": "https://api.twitch.tv/kraken/channels/",
+		"fields": [
+			"status",
+			"game",
+			"views",
+			"followers"
+		],
+		"message": "Détails du channel #USER#: #NL#",
+		"additional": "- Status: #status##NL#- Jeu actuel: #game##NL#- Vues: #views##NL#- Followers: #followers#",
+		"error": "Impossible de trouver #USER#"
+	}
+}
