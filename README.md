@@ -2,7 +2,6 @@
 
 Un bot pour l'application Discord base sur l'API Discord.js
 
-## Clés
 
 ### Discord
 
@@ -41,6 +40,13 @@ Il utilise les modules suivants :
 
 Installer avec `npm install`
 
+Il est nécessaire de mettre le lien ou sont installé vos nodes_modules dans le fichier bot.js et twitch.js :
+
+try {
+		eval("var "+name+" = require(\"[Chemin des nodes_modules]"+dependency+"\")");
+		console.log("LIB : "+dependency+" [OK]");
+}
+
 (sur un raspberry pi le support audio n'est pas disponible : `npm install --no-optional` pour désactiver l'option)
 
 ### Configuration
@@ -51,6 +57,13 @@ Créez un fichier auth.json selon le modèle fourni dans auth.json.tpl et rempla
 
 Pour demarrer le bot il faut utiliser `node bot.js`
 
+### Commands
+
+Pour ajouter, modifier ou supprimer des commandes sur le bot, il faut modifier le fichier basics.json et/ou advanced.json situé dans le dossier commands.
+
+### Dialogs
+
+Le dossier dialogues contient les réponses automatique du bot lorsqu'il detecte une des commandes qui s'y trouve.
 
 ## Installation dans docker
 
@@ -74,10 +87,4 @@ Pour modifier le code du bot sans rebuild à chaque fois, il sufit de décomment
 
 ## Architecture des modules
 
-Il est maintenant possible de créer des modules d'autoréponse aux messages de type `!command`
-
-Pour créer un nouveau module, s'inspirer du fichier `message/message_hello.js`
-
-Une commande `!test` va charger dynamiquement le fichier `message/message_test.js` et executer la fonction qui est exportée.
-
-Les objets `message`, `mybot`, `input` sont automatiquement envoyés à la fonction `message()`
+En cours de développement...
