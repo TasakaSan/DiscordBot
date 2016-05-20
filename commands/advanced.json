@@ -1,0 +1,19 @@
+{
+    "hardware": {
+        "description": "link la config de Lastwolf",
+        "file": "hardware.jpg"
+    },
+    "twitter": {
+		"usage": "<command> <username>",
+        "description": "récupère un tweet de <username> en fonction de <command>"
+    },
+	"twitch": {
+		"usage": "<command> <channelname>",
+		"description": "récupère des détails du stream/channel de <username> en fonction de <command>"
+	},
+	"planning": {
+		"usage": "",
+		"alias": "twitch planning lastwolfplay",
+		"description": "récupère le planning de Lastwolf"
+	}
+}

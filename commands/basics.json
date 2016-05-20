@@ -1,0 +1,49 @@
+{
+    "command": {
+        "description": "la liste des commandes disponibles",
+        "message": "Commandes disponibles:"
+    },
+    "advanced": {
+        "description": "la liste des commandes avancées",
+        "message": "Commandes avancées:"
+    },
+    "rules": {
+        "description": "les règles de la communauté",
+        "message": "Bienvenu dans la meute !#NL#Ici les deux seules règles qui prévalent sont le respect des autres et de l'orthographe.#NL#Les traits d'esprits sont vivement encouragés et n'oubliez pas qu'en écrivant sur le tchat vos écrits sont publiques.#NL#Bon jeu !"
+    },
+    "social": {
+        "description": "où trouver Lastwolf sur les réseaux sociaux",
+        "message": "Le dernier loup sur la toile c'est par là:#NL#https://twitter.com/lastwolfplays#NL#https://www.facebook.com/lastwolfplays#NL#https://www.youtube.com/channel/UC_D3dHEqqZrx_k82v5lJglQ"
+    },
+    "thedivision": {
+        "description": "les docs utiles pour les joueurs de The Division",
+        "message": "Un des gdoc de référence sur le jeu: https://goo.gl/aLkMld#NL#Map de la DZ complète avec filtres: http://goo.gl/JhFEGU#NL#Le gdoc de pandé avec les builds dps et supports: https://goo.gl/zuFN36"
+    },
+    "farmroad": {
+        "description": "la route de farm de Lastwolf en vidéo",
+        "message": "Voici la route de farm: https://youtu.be/qkAqSGHir30"
+    },
+    "diablo3": {
+        "description": "liste des personnages de Lastwolf",
+        "message": "Voici la liste des personnages de Lastwolf: http://eu.battle.net/d3/fr/profile/Lastwolf-2869/hero/54563586"
+    },
+    "drahquebible": {
+        "description": "doc de référence pour les débuts de saison Diablo",
+        "message": "Voici le Gdoc de référence pour les débuts de saison sur Diablo 3: https://docs.google.com/spreadsheets/d/1gCq8ihJBcYDZpPICFqA407fL0Fl_K9PMBp83npy5DcM/htmlview?usp=sharing&sle=true"
+    },
+    "stream": {
+        "description": "le stream twitch de Lastwolf",
+        "message": "Voici le stream de lastwolf: https://www.twitch.tv/lastwolfplay"
+    },
+    "nvidia": {
+        "description": "le stream twitch de Lastwolf sur NvidiaFrance",
+        "message": "Lastwolf lance son stream sur NvidiaFrance: https://www.twitch.tv/nvidiafrance"
+    },
+    "donnation": {
+        "description": "le lien pour faire une donnation à Lastwolf",
+        "message": "Si toi aussi tu veux soutenir le stream de Lastwolf: https://www.twitchalerts.com/donate/lastwolfplay#NL#Les donnations ne sont pas obligatoires mais elles participent à l'amélioration du stream."
+    },
+    "prout": {
+        "description": "Ne sert à rien !"
+    }
+}
