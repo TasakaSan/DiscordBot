@@ -3,17 +3,13 @@
         "description": "la liste des commandes disponibles",
         "message": "Commandes disponibles:"
     },
-    "command+": {
-        "description": "la liste des commandes détaillées",
-        "message": "Commandes disponibles:"
-    },
     "advanced": {
         "description": "la liste des commandes avancées",
         "message": "Commandes avancées:"
     },
     "rules": {
         "description": "les règles de la communauté",
-        "message": "Bienvenu dans la meute !#NL#Ici les deux seules règles qui prévalent sont le respect des autres et de l'orthographe.#NL#Les traits d'esprits sont vivement encouragés et n'oubliez pas qu'en écrivant sur le tchat vos écrits sont publics !#NL#Bon jeu !"
+        "message": "Bienvenu dans la meute !#NL#Ici les deux seules règles qui prévalent sont le respect des autres et de l'orthographe.#NL#Les traits d'esprits sont vivement encouragés et n'oubliez pas qu'en écrivant sur le tchat vos écrits sont publiques.#NL#Bon jeu !"
     },
     "social": {
         "description": "où trouver Lastwolf sur les réseaux sociaux",

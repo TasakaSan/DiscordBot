@@ -1,3 +1,0 @@
-hardware;link la config de Lastwolf;null;file:hardware.jpg
-twitter;affiche le dernier tweet d'un compte;null;usage:<username>
-twitch;vérifie si le streamer est en live;%s est en ligne sur http://www.twitch.tv/%s;usage:<username>

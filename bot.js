@@ -43,8 +43,23 @@ try {
 	process.exit();
 }
 
+// Preload plugins
+/*try {
+	var plugins = require("./plugins.js");
+	console.log("PLUGINS : loaded [OK]");
+} catch(e) {
+	console.log("Error plugins\n"+e.stack);
+	process.exit();
+}*/
+try {
+	var plugins = require("./plugins.js").init();
+	console.log("PLUGINS : loaded [OK]");
+} catch(e) {
+	console.log("Error plugins\n"+e.stack);
+	process.exit();
+}
+
 mybot.on('ready', function () {
-	//require("./plugins.js").init();
 	console.log("Bot is ready.");
 });
 
@@ -54,12 +69,19 @@ mybot.on("disconnected", function () {
 	
 });
 
-// Get command list
+// Get command lists
 try {
-	var commands = require("./commands/basics.json");
-	console.log("FILE : commands/basics.json [OK]");
+	var basics = require("./commands/basics.json");
+	console.log("FILE : basics.json [OK]");
 } catch (e){
-	console.log("Please check the commands/basics.json file.\n"+e.stack);
+	console.log("Please check the basics.json file.\n"+e.stack);
+	process.exit();
+}
+try {
+	var advanced = require("./commands/advanced.json");
+	console.log("FILE : advanced.json [OK]");
+} catch (e){
+	console.log("Please check the advanced.json file.\n"+e.stack);
 	process.exit();
 }
 
@@ -82,22 +104,29 @@ mybot.on("message", function(message) {
 		
 		console.log("command "+user_cmd.name+" from "+message.author);
 		
-		//console.log("user_cmd: "+JSON.stringify(user_cmd));
-		
-		var command = commands[user_cmd.name];
+		var command = basics[user_cmd.name];
 		if(!command) {
-			console.log("command "+user_cmd.name+" not defined in commands!");
-		} else if (user_cmd.name == "command+" || user_cmd.name == "command") {
+			//console.log("command "+user_cmd.name+" not defined in basics!");
+			command = advanced[user_cmd.name];
+		}
+		if(!command) {
+			console.log("command "+user_cmd.name+" not defined!");
+		} else if (user_cmd.name == "command" || user_cmd.name == "advanced") {
 			// specific help command
 			var info = command.message;
-			for(var cmd in commands) {
+			if (user_cmd.name == "advanced") {
+				var cmd_list = advanced;
+			} else {
+				var cmd_list = basics;
+			}
+			for(var cmd in cmd_list) {
 				info += "\n!" + cmd;
-				if (user_cmd.name == "command+") {
-					var usage = commands[cmd].usage;
+				if (user_cmd.name == "advanced") {
+					var usage = cmd_list[cmd].usage;
 					if(usage){
 						info += " " + usage;
 					}
-					var description = commands[cmd].description;
+					var description = cmd_list[cmd].description;
 					if(description){
 						info += "\n\t" + description;
 					}
@@ -105,9 +134,37 @@ mybot.on("message", function(message) {
 			}
 			mybot.sendMessage(message.channel, info);
 		} else {
-			//if (command.process) {}
+			var alias = false;
+			if (command.alias) {
+				alias = true;
+				var original = user_cmd.name;
+				user_cmd.name = command.alias.split(" ")[0];
+				user_cmd.content = command.alias.substring(user_cmd.name.length+1);
+				console.log("!"+original+" alias transformed into !"+user_cmd.name+" "+user_cmd.content);
+			}
+			/*if (command.process) {
+				eval(command.process);
+			}*/
 			//if (command.file) {}
-			if (command.message) {
+			if (plugins[user_cmd.name]) {
+				// retrieve the plugin command and its param
+				var plugin_cmd = user_cmd.content.split(" ")[0];
+				var plugin_param = user_cmd.content.substring(plugin_cmd.length+1).split(" ")[0].toLowerCase();
+				plugin_cmd = plugin_cmd.toLowerCase();
+				// set options to pass to plugin
+				var options = {
+					bot: mybot,
+					message: message
+				};
+				if (plugin_cmd === "" || plugin_param === "") {
+					plugins[user_cmd.name].help(options);
+				} else {
+					console.log("Command "+plugin_cmd+"('"+plugin_param+"') in plugin "+user_cmd.name);
+					options["command"]	= plugin_cmd;
+					options["param"]	= plugin_param;
+					plugins[user_cmd.name].get(options);
+				}
+			} else if (command.message) {
 				mybot.sendMessage(message.channel, command.message.replace(/#NL#/g,"\n"));
 			} else {
 				console.log("Empty command "+user_cmd.name+": "+JSON.stringify(command));
@@ -115,7 +172,7 @@ mybot.on("message", function(message) {
 		}
 	} else if(input.indexOf(mybot.user.mention()) == 0) {
 		// Bot is mentioned at beginning
-		console.log("user "+message.author+" speak directly to Bot");
+		console.log("user "+message.author+" is speaking with Bot");
 		try { 
 			var user_cmd = {};
 			user_cmd.mention = input.split(" ")[0];
@@ -130,10 +187,10 @@ mybot.on("message", function(message) {
 	} else if(message.isMentioned(mybot.user)) {
 		// Bot is mentioned elsewhere
 		console.log("user "+message.author+" mentioned Bot");
-		mybot.sendMessage(message.channel, "On parle de moi ? :)");
+		mybot.sendMessage(message.channel, "On parle de moi ? :smile:");
 	} else if(input.length >= 2 && input.length <= 24) {
 		// Maybe dialog context is possible
-		console.log("user may dialog with Bot");
+		console.log("user "+message.author+" may dialog with Bot");
 		var dialogs = require("./dialogs/main.json");
 		for(intro in dialogs) {
 			if(input.toLowerCase().indexOf(intro) >= 0) {
@@ -142,12 +199,6 @@ mybot.on("message", function(message) {
 				break;
 			}
 		}
-	}
-	
-	// message is user speaking to/with bot
-	if(input.indexOf(mybot.user.mention()) == 0) {
-		console.log("user "+message.author+" is speaking with bot");
-		// do something
 	}
 
 	// bot function close

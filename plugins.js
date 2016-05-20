@@ -7,6 +7,7 @@ function getDirectories(srcpath) {
 	}); 
 } 
 
+var plugins = {};
 var plugin_folders; 
 var plugin_directory; 
 var exec_dir; 
@@ -20,7 +21,8 @@ try { //try loading plugins from a non standalone install first
 } 
 
 exports.init = function(){ 
-    preload_plugins(); 
+    preload_plugins();
+	return plugins;
 }; 
 
 function createNpmDependenciesArray (packageFilePath) { 
@@ -31,16 +33,17 @@ function createNpmDependenciesArray (packageFilePath) {
         deps.push(mod + "@" + p.dependencies[mod]); 
     } 
 
-
     return deps; 
 } 
 
 function preload_plugins(){ 
-    var deps = []; 
+    /*var deps = []; 
     var npm = require("npm"); 
     for (var i = 0; i < plugin_folders.length; i++) { 
         try{ 
-            require(plugin_directory + plugin_folders[i]); 
+            require(plugin_directory
+						+ plugin_folders[i] + "/"
+						+ plugin_folders[i].toLowerCase() + ".js"); 
         } catch(e) { 
             deps = deps.concat(createNpmDependenciesArray(plugin_directory + plugin_folders[i] + "/package.json")); 
         } 
@@ -59,7 +62,7 @@ function preload_plugins(){
                     console.log(er); 
                 } 
                 console.log("Plugin preload complete"); 
-                load_plugins() 
+                load_plugins();
             }); 
 
 
@@ -67,20 +70,25 @@ function preload_plugins(){
                 console.log("preload_plugins: " + err); 
             } 
         }); 
-    } else { 
-        load_plugins() 
-    } 
+    } else { */
+        load_plugins();
+    //} 
 } 
 
 
 function load_plugins(){ 
-    var bot = require("./bot.js"); 
+    //var bot = require("./bot.js"); 
     var commandCount = 0; 
-    for (var i = 0; i < plugin_folders.length; i++) { 
-        var plugin; 
-        try{ 
-            plugin = require(plugin_directory + plugin_folders[i]) 
-        } catch (err){ 
+    for(var i = 0; i < plugin_folders.length; i++) { 
+        try {
+			console.log("Trying to load plugins/"+plugin_folders[i]+"/"+plugin_folders[i].toLowerCase()+".js");
+			
+            plugins[plugin_folders[i].toLowerCase()] = require(plugin_directory
+																+ plugin_folders[i] + "/"
+																+ plugin_folders[i].toLowerCase() + ".js");
+			
+			console.log("Plugin "+plugin_folders[i]+" loaded");
+        } catch(err) { 
             console.log("Improper setup of the '" + plugin_folders[i] +"' plugin. : " + err); 
         } 
         /*if (plugin){ 
@@ -93,6 +101,6 @@ function load_plugins(){
                 } 
             } 
         }*/
-    } 
+    }
     //console.log("Loaded " + bot.commandCount() + " chat commands type !help in Discord for a commands list.") 
 } 

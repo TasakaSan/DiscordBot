@@ -15,7 +15,7 @@
 		"message": "Bonjour à toi frère loup :wolf:"
 	},
 	"yop": {
-		"message": "Yop, crache pas dedans :wink:"
+		"message": "Yop, crache pas dedans :laughing:"
 	},
 	"plop les gens": {
 		"message": "Plop :interrobang:"
@@ -31,5 +31,8 @@
 	},
 	"salut": {
 		"message": "Salut"
+	},
+	"la grande question sur la vie, l'univers et le reste": {
+		"message": "42"
 	}
 }
