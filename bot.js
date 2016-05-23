@@ -90,7 +90,7 @@ try {
 }
 
 mybot.on("message", function(message) {
-	if(message.author == mybot.user) {
+	if(message.author == mybot.user && config.connection == "token") {
 		return;
 	}
 	
