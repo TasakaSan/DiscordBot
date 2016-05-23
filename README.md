@@ -30,7 +30,8 @@ sous Linux:
 
 ### Twitter
 
-Afin que le plugin Twitter fonctionne, il faut créer une application Twitter sur https://apps.twitter.com/
+Afin que le plugin Twitter fonctionne, il faut créer une application Twitter sur https://apps.twitter.com/ .
+
 Copier les valeurs des clés d'authentification obtenues dans le fichier `auth.json` tel que: 
 
 auth.json
@@ -45,6 +46,7 @@ auth.json
 ## Authentification
 
 Il existe 2 méthodes pour qu'un Bot se connecte à votre serveur **Discord**.
+
 Ces 2 méthodes sont compatibles l'une avec l'autre et nécessite seulement le changement de l'option _connection_ dans le fichier `config.json`:
 * _account_ pour une authentification par compte utilisateur
 * _token_ pour une authentification par token d'application
@@ -87,6 +89,7 @@ Dans le fichier `config.json` précédemment créé, ne garder que _token_ dans 
 ```
 
 Ensuite il est nécessaire d'_inviter_ le Bot sur votre serveur **Discord**.
+
 Utiliser le lien plus bas en remplaçant les champs comme précisé ci-dessous:
 * [id_application] : l'id de l'application que **Discord** qui a été créée précédemment
 * [permission] : la valeur des permissions à accorder au Bot (utiliser 66321471 par défaut)
@@ -114,7 +117,9 @@ Il est possible d'ajouter des commandes via les fichiers `.json` présent dans l
 ### Dialogues
 
 Il est possible d'ajouter des réponses au Bot. Ces réponses, sont en général des textes courts que le Bot répondra suite à la détection d'un texte précis.
+
 Exemple: lorsqu'un utilisateur dit "Bonjour", le Bot répond "Bonjour"
+
 Ces ajouts se font pour le moment via le fichier `main.json` du dossier `dialogs`. La partie dialogue sera étoffée avec le temps.
 
 (**_TODO: améliorer la détection des textes, ajouter des dialogues, ajouter un stack de message (limitera le spam)..._**)
@@ -122,6 +127,7 @@ Ces ajouts se font pour le moment via le fichier `main.json` du dossier `dialogs
 ## Plugins
 
 Nous parlions précédemment de commandes utilisant des plugins, ils permettent de centraliser toutes les commandes d'un même type et d'en modifier leur comportement si nécessaire.
+
 Ces plugins se trouvent dans le dossier `plugins` ordonnés tous de la manière suivante:
 * [plugins]
   * [Nom_du_plugin]
