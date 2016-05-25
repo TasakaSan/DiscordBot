@@ -9,19 +9,31 @@
 		"message": "Bonjour tout seul :laughing:"
 	},
 	"salut la meute": {
-		"message": "Bonjour à toi frère loup :wolf:"
+		"message": "Salut à toi frère loup :wolf:"
 	},
 	"bonjour la meute": {
 		"message": "Bonjour à toi frère loup :wolf:"
 	},
+	"bonne journée": {
+		"message": "Bonne journée, à plus tard"
+	},
+	"bonne soirée": {
+		"message": "Bonne soirée, à demain :wink:"
+	},
+	"bonne nuit": {
+		"message": "Bonne nuit, fais de beaux rêves :zzz:"
+	},
 	"yop": {
-		"message": "Yop, crache pas dedans :laughing:"
+		"message": "Yop, crache pas dedans :yum:"
 	},
 	"plop les gens": {
 		"message": "Plop :interrobang:"
 	},
 	"plop": {
 		"message": "Plop :interrobang:"
+	},
+	"coucou": {
+		"message": "Hey, coucou !"
 	},
 	"bonjour": {
 		"message": "Bonjour et bienvenu :smiley:"

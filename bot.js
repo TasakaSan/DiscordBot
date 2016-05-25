@@ -88,16 +88,24 @@ try {
 	console.log("Please check the advanced.json file.\n"+e.stack);
 	process.exit();
 }
+try {
+	var humor = require("./commands/humor.json");
+	console.log("FILE : humor.json [OK]");
+} catch (e){
+	console.log("Please check the humor.json file.\n"+e.stack);
+	process.exit();
+}
 
 mybot.on("message", function(message) {
-	if(message.author == mybot.user && config.connection == "token") {
+	if(message.author == mybot.user && config.self === false) {
+		// if connection is token, bot doesn't have to check the message he send
 		return;
 	}
 	
 	var input = message.content.trim();
 	
-	// message is a command
-	if(input[0] === '!') {		
+	if(input[0] === '!') {
+		// message is a command
 		console.log("raw command: "+input);
 	
 		var user_cmd = {};
@@ -112,6 +120,10 @@ mybot.on("message", function(message) {
 		if(!command) {
 			//console.log("command "+user_cmd.name+" not defined in basics!");
 			command = advanced[user_cmd.name];
+		}
+		if(!command) {
+			//console.log("command "+user_cmd.name+" not defined!");
+			command = humor[user_cmd.name];
 		}
 		if(!command) {
 			console.log("command "+user_cmd.name+" not defined!");
@@ -175,36 +187,42 @@ mybot.on("message", function(message) {
 			}
 		}
 	} else if(input.indexOf(mybot.user.mention()) == 0) {
+		
 		// Bot is mentioned at beginning
 		console.log("user "+message.author+" is speaking with Bot");
 		try { 
 			var user_cmd = {};
 			user_cmd.mention = input.split(" ")[0];
 			user_cmd.first = input.split(" ")[1];
-			user_cmd.content = input.substring(mybot.user.mention().length+user_cmd.first.length+2);
+			user_cmd.content = input.substring(mybot.user.mention().length+1);
 			
+			console.log("user said '"+user_cmd.content+"'");
 			// do something ?
 			
 		} catch(e) { //no command 
 			mybot.reply(message, "Oui ?");
 		}
+		
 	} else if(message.isMentioned(mybot.user)) {
+		
 		// Bot is mentioned elsewhere
 		console.log("user "+message.author+" mentioned Bot");
 		mybot.sendMessage(message.channel, "On parle de moi ? :smile:");
-	} else if(input.length >= 2 && input.length <= 24) {
+		
+	} else if(input.length >= 2 && input.length <= 72) {
+		
 		// Maybe dialog context is possible
 		console.log("user "+message.author+" may dialog with Bot");
 		var dialogs = require("./dialogs/main.json");
 		for(intro in dialogs) {
-			if(input.toLowerCase().indexOf(intro) >= 0) {
+			//if(input.toLowerCase().indexOf(intro) >= 0) {
+			if(input.toLowerCase() == intro) {
 				var answer = dialogs[intro];
 				mybot.reply(message, answer.message);
 				break;
 			}
 		}
 	}
-
 	// bot function close
 });
 
