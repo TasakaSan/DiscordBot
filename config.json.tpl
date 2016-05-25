@@ -1,4 +1,5 @@
 {
 	"environment": "windows|linux",
-	"connection": "token|account"
+	"connection": "token|account",
+	"self":	true|false
 }

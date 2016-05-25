@@ -9,5 +9,10 @@
     "consumer_secret": "TWITTER_API_SECRET",
     "access_token_key": "TWITTER_ACCESS_TOKEN",
     "access_token_secret": "TWITTER_ACCESS_SECRET"
+  },
+  "blizzard":{
+	"apikey": "BLIZZARD_KEY",
+	"secret": "BLIZZARD_SECRET",
+	"access_token": "BLIZZARD_TOKEN"
   }
 }

@@ -1,0 +1,8 @@
+{
+	"config": {
+		"locale": "fr_FR"
+	},
+	"dependencies": {
+		"request": ">=2.72.0"
+	}
+}

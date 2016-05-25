@@ -28,6 +28,10 @@ sous Linux:
 "environment": "linux"
 ```
 
+Concernant le champ _self_ dans le fichier `config.json`, il s'agit d'accepter (true) ou non (false) que le **Bot** interprète ses propres messages.
+
+Il est conseillé de garder cette option à _false_ afin d'éviter que le **Bot** ne se réponde à lui même, sauf en phase de développement si vous souhaitez tester le **Bot** avec votre propre compte **Discord**.
+
 ### Twitter
 
 Afin que le plugin Twitter fonctionne, il faut créer une application Twitter sur https://apps.twitter.com/ .

@@ -31,10 +31,6 @@
         "description": "doc de référence pour les débuts de saison Diablo",
         "message": "Voici le Gdoc de référence pour les débuts de saison sur Diablo 3: https://docs.google.com/spreadsheets/d/1gCq8ihJBcYDZpPICFqA407fL0Fl_K9PMBp83npy5DcM/htmlview?usp=sharing&sle=true"
     },
-    "stream": {
-        "description": "le stream twitch de Lastwolf",
-        "message": "Voici le stream de lastwolf: https://www.twitch.tv/lastwolfplay"
-    },
     "nvidia": {
         "description": "le stream twitch de Lastwolf sur NvidiaFrance",
         "message": "Lastwolf lance son stream sur NvidiaFrance: https://www.twitch.tv/nvidiafrance"
@@ -45,51 +41,5 @@
     },
     "prout": {
         "description": "Ne sert à rien !"
-    },
-    "ping": {
-        "description": "pong !"
-    },
-    "tasaka": {
-        "description": "Pour donner tes sous à Tasaka, merci de faire vos donnations sur mon Compte Paypal ou dans mon portefeuille Bitcoin MP pour plus d'infos"
-    },
-    "steevo": {
-        "description": "Attention le nazimodo est la, tout le monde à couvert"
-    },
-    "dais": {
-        "description": "toi même, d'abord"
-    },
-    "firk": {
-        "description": "Attention photofakeshop en approche"
-    },
-    "bestiyo": {
-        "description": "les pixels, c'est ma grande passion"
-    },
-    "jubeii": {
-        "description": "Encore une sombre histoire de dindon"
-    },
-    "kordelor": {
-        "description": "Moi, d'abord je travaille pour la meilleure entreprise de France"
-    },
-    "loth": {
-        "description": "Ah non pas lui, il va encore me trifouiller de l'intérieur"
-    },
-    "rancoud": {
-        "description": "Monsieur Univers Starfoulila  http://monsieurunivers.fr/"
-    },
-    "oxycrest": {
-        "description": "Chut, je suis planqué le dite pas"
-    },
-    "timesidious": {
-        "description": "https://www.youtube.com/watch?v=cwI00CQ2Nl4"
-    },
-    "allkor77": {
-        "description": "troll incomming, on attend un fail de sa part"
-    },
-    "maitretasaka": {
-        "description": "Oh mon maitre tasaka, oh toi mon gourou, mon sauveur, prend tout mon argent"
-    },
-    "cb": {
-        "description": "Attend deux seconde je prends de quoi noter pour Tasaka"
-    }
-    
+    }  
 }

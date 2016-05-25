@@ -34,6 +34,7 @@ try {
 	process.exit();
 }
 
+// Get api command list
 try {
 	var api = require("./api.json");
 	console.log("FILE : api.json [OK]");
