@@ -24,5 +24,33 @@
 		"usage": "",
 		"alias": "twitch online lastwolfplay",
         "description": "info sur le stream twitch de Lastwolf"
+    },
+	"wolftweet": {
+		"usage": "",
+		"alias": "twitter lasttweet lastwolfplays",
+        "description": "lasttweet de Lastwolf"
+    },
+	"divitweet": {
+		"usage": "",
+		"alias": "twitter lasttweet thedivisiongame",
+        "description": "lasttweet de thedivision"
+    },
+	"tasatweet": {
+		"usage": "",
+		"alias": "twitter lasttweet tasakasama",
+        "description": "lasttweet de tasakasama"
+    },
+	"kittytweet": {
+		"usage": "",
+		"listed": false,
+		"alias": "twitter lasttweet hellokitty",
+        "description": "lasttweet de hellokitty"
+    },
+	"pokemon": {
+		"usage": "",
+		"listed": false,
+		"alias": "twitter lasttweet Pokemon",
+        "description": "lasttweet de Pokemon"
     }
 }
+
